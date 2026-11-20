@@ -5,6 +5,18 @@ export function ScoreStrip({ state }: { state: Shift }) {
       (f) =>
         (f.departureAt ?? state.time) > f.deadline && f.status !== "departed",
     ).length;
+  const transferTotal = state.transferBatches.reduce(
+    (n, b) => n + b.count,
+    0,
+  );
+  const transferOnboard = state.transferBatches.reduce(
+    (n, b) => n + b.onboardCount,
+    0,
+  );
+  const transferMissed = state.transferBatches.reduce(
+    (n, b) => n + b.missedCount,
+    0,
+  );
   return (
     <div className="score-strip">
       <div>
@@ -34,6 +46,18 @@ export function ScoreStrip({ state }: { state: Shift }) {
           <strong>
             {String(late).padStart(2, "0")}
             <small>FLIGHTS</small>
+          </strong>
+        </p>
+      </div>
+      <div>
+        <span className="stat-icon transfer">⇄</span>
+        <p>
+          转机接续
+          <strong>
+            {transferOnboard}
+            <small>
+              / {transferTotal} 登机 · {transferMissed} 误机
+            </small>
           </strong>
         </p>
       </div>

@@ -1,6 +1,6 @@
 import type { Shift } from "../../../shared/types";
 import { copyShift, record } from "../../../shared/document";
-import { flightReady } from "../lib/readiness";
+import { departureBlockReason, flightReady } from "../lib/readiness";
 export function assignStand(state: Shift, id: string, standId: string): Shift {
   const s = copyShift(state),
     f = s.flights.find((x) => x.id === id),
@@ -21,6 +21,7 @@ export function assignStand(state: Shift, id: string, standId: string): Shift {
   }
   f.standId = standId;
   f.status = "parked";
+  f.parkedAt = s.time;
   s.selectedStandId = standId;
   record(s, `${id} 已停靠 ${standId}，可开始保障`, "success");
   return s;
@@ -30,7 +31,11 @@ export function departFlight(state: Shift, id: string): Shift {
     f = s.flights.find((x) => x.id === id);
   if (!f) return state;
   if (f.status !== "parked" || !flightReady(s, id)) {
-    record(s, "离港未获许可：请先完成全部地勤任务", "warning");
+    record(
+      s,
+      `离港未获许可：${departureBlockReason(s, id) ?? "请先完成全部地勤任务"}`,
+      "warning",
+    );
     return s;
   }
   f.status = "departing";

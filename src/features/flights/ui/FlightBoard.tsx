@@ -1,6 +1,7 @@
 import type { Shift } from "../../../shared/types";
 import { clockLabel } from "../../../shared/document";
 import { statusLabels, turnaroundProgress } from "../lib/readiness";
+import { breakdownOf } from "../../connections";
 interface Props {
   state: Shift;
   onSelect: (id: string) => void;
@@ -23,7 +24,9 @@ export function FlightBoard({ state, onSelect }: Props) {
         <b>06</b>
       </div>
       <div className="flight-list">
-        {state.flights.map((f) => (
+        {state.flights.map((f) => {
+          const transfers = breakdownOf(state, f.id);
+          return (
           <button
             key={f.id}
             className={`flight-card ${f.id === state.selectedFlightId ? "selected" : ""} ${f.status === "departed" ? "completed" : ""}`}
@@ -52,13 +55,27 @@ export function FlightBoard({ state, onSelect }: Props) {
                 {f.standId ?? "—"} <i /> {clockLabel(f.deadline)}
               </span>
             </div>
+            {transfers.total > 0 && (
+              <div
+                className="transfer-badge"
+                data-testid={`badge-${f.id}`}
+                title={`转机旅客 ${transfers.total} 人：已登机 ${transfers.onboard} · 误机 ${transfers.missed} · 未决 ${transfers.waiting + transfers.inTransit}`}
+              >
+                转机 {transfers.total} 人
+                <em>
+                  ✓{transfers.onboard} · ✕{transfers.missed} · 待
+                  {transfers.waiting + transfers.inTransit}
+                </em>
+              </div>
+            )}
             {f.status === "parked" && (
               <div className="mini-track">
                 <i style={{ width: `${turnaroundProgress(state, f.id)}%` }} />
               </div>
             )}
           </button>
-        ))}
+          );
+        })}
       </div>
       <div className="shift-note">
         <span>☀</span>

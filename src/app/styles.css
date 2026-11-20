@@ -1201,3 +1201,256 @@ footer > span:last-child {
     transition: none !important;
   }
 }
+
+/* ---------- 转机接续 / 摆渡运输 ---------- */
+.boarding-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #819087;
+  background: #f1efe4;
+  border: 1px solid #e0e0d2;
+  border-radius: 7px;
+  padding: 8px 11px;
+  margin: 8px 0 4px;
+}
+.boarding-info b {
+  color: #2e4446;
+  font-weight: 600;
+}
+.transfer-panel {
+  border-top: 1px solid #e3e2d4;
+  padding-top: 14px;
+  margin-top: 14px;
+}
+.transfer-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  font-size: 10px;
+  color: #7d8a80;
+  background: #f4f2e8;
+  border-radius: 7px;
+  padding: 8px 10px;
+  margin: 8px 0;
+}
+.transfer-summary b {
+  font: 600 15px "Barlow Condensed", sans-serif;
+  color: #2e4446;
+  margin-left: 2px;
+}
+.transfer-summary .ok-text b {
+  color: #4f8467;
+}
+.transfer-summary .bad-text b {
+  color: #c05a4d;
+}
+.transfer-deadline {
+  width: 100%;
+  font-weight: 600;
+  color: #b07a3c;
+}
+.batch-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.batch-card {
+  border: 1px solid #deddcf;
+  border-left-width: 4px;
+  border-radius: 8px;
+  padding: 9px 11px;
+  background: #fbfaf4;
+}
+.batch-card.hold {
+  border-left-color: #d19a4e;
+}
+.batch-card.moving {
+  border-left-color: #6f8fb5;
+}
+.batch-card.ok {
+  border-left-color: #5e9c77;
+}
+.batch-card.bad {
+  border-left-color: #c05a4d;
+}
+.batch-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.batch-head strong {
+  font: 600 14px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.8px;
+}
+.batch-stage {
+  font-size: 9px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  background: #ece9da;
+  color: #6d7a70;
+  letter-spacing: 0.6px;
+}
+.batch-card.ok .batch-stage {
+  background: #dcebe1;
+  color: #3f7557;
+}
+.batch-card.bad .batch-stage {
+  background: #f3dcd8;
+  color: #a8443a;
+}
+.batch-card.moving .batch-stage {
+  background: #dce6f1;
+  color: #3f648c;
+}
+.batch-route {
+  font-size: 10px;
+  color: #738079;
+  margin-top: 5px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.batch-route em {
+  font-style: normal;
+  color: #9a8a5e;
+  white-space: nowrap;
+}
+.batch-counts {
+  display: flex;
+  gap: 14px;
+  margin-top: 6px;
+  font-size: 10px;
+  color: #8a958c;
+}
+.batch-counts b {
+  font: 600 13px "Barlow Condensed", sans-serif;
+  color: #2e4446;
+  margin-left: 3px;
+}
+.batch-timing {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+  font-size: 10px;
+  color: #7d8a80;
+}
+.ok-text {
+  color: #4f8467;
+}
+.bad-text {
+  color: #c05a4d;
+}
+.wait-badge {
+  background: #f6e6cb;
+  color: #a8712e;
+  border-radius: 20px;
+  padding: 1px 8px;
+  font-weight: 600;
+}
+.batch-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+button.mini {
+  flex: 1;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 7px 9px;
+  border-radius: 7px;
+  background: #293f46;
+  color: #f4f1e6;
+  letter-spacing: 0.4px;
+}
+button.mini.accent {
+  background: #6f5394;
+}
+button.mini.danger {
+  background: #f3f0e4;
+  color: #b1543f;
+  border: 1px solid #ddb8ad;
+}
+.placement-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 7px;
+}
+.placement-chip {
+  font-size: 9px;
+  background: #f6e3de;
+  color: #9c463b;
+  border-radius: 6px;
+  padding: 3px 8px;
+  letter-spacing: 0.4px;
+}
+.shuttle-dispatch {
+  margin-top: 12px;
+  border: 1px dashed #c9b7e0;
+  background: #f6f2fb;
+  border-radius: 8px;
+  padding: 10px 11px;
+}
+.dispatch-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 10px;
+  color: #7c6c93;
+  margin-bottom: 8px;
+}
+.dispatch-head strong {
+  color: #56407a;
+}
+.dispatch-buttons {
+  display: flex;
+  gap: 8px;
+}
+.affected-box {
+  margin-top: 10px;
+  border-radius: 8px;
+  padding: 9px 11px;
+  background: #fdf3e3;
+  border: 1px solid #ecd6ad;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 10px;
+  color: #8a6233;
+}
+.affected-box strong {
+  color: #a8712e;
+  margin-bottom: 2px;
+}
+.depart-block {
+  font-size: 10px;
+  color: #b1543f;
+  background: #f9e7e2;
+  border-radius: 7px;
+  padding: 7px 10px;
+  margin-top: 8px;
+}
+.transfer-badge {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 7px;
+  font-size: 9px;
+  font-weight: 600;
+  color: #5c4a80;
+  background: #f0ebf7;
+  border-radius: 6px;
+  padding: 4px 8px;
+  letter-spacing: 0.5px;
+}
+.transfer-badge em {
+  font-style: normal;
+  font-weight: 500;
+  color: #7c6c93;
+}
+.stat-icon.transfer {
+  color: #7c61a3;
+}

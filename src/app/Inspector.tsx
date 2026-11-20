@@ -1,8 +1,19 @@
 import type { ServiceKind, Shift } from "../shared/types";
 import { clockLabel } from "../shared/document";
-import { flightReady, departFlight, statusLabels } from "../features/flights";
+import {
+  departureBlockReason,
+  flightReady,
+  departFlight,
+  statusLabels,
+} from "../features/flights";
 import { StandPicker } from "../features/apron";
 import { ServicePanel } from "../features/services";
+import {
+  TransferPanel,
+  requestWait,
+  cancelWait,
+  dispatchShuttle,
+} from "../features/connections";
 import { EventLog } from "../features/session";
 export function Inspector({
   state,
@@ -18,6 +29,7 @@ export function Inspector({
   onDispatch: (k: ServiceKind, v: string) => void;
 }) {
   const f = state.flights.find((x) => x.id === state.selectedFlightId)!;
+  const blockReason = departureBlockReason(state, f.id);
   return (
     <aside className="inspector">
       <div className="inspector-heading">
@@ -49,6 +61,14 @@ export function Inspector({
           {statusLabels[f.status]}
         </span>
       </div>
+      <div className="boarding-info">
+        <span>
+          登机开放 <b>{clockLabel(f.deadline - 40)}</b>
+        </span>
+        <span className={state.time > f.boardCloseAt ? "warning-text" : ""}>
+          登机截止 <b>{clockLabel(f.boardCloseAt)}</b>
+        </span>
+      </div>
       <StandPicker state={state} onAssign={onAssign} onSelect={onStand} />
       {f.status !== "incoming" && f.status !== "scheduled" && (
         <div className="stand-occupancy">
@@ -66,10 +86,21 @@ export function Inspector({
         </div>
       )}
       <ServicePanel state={state} onDispatch={onDispatch} />
+      {f.status !== "scheduled" && f.status !== "incoming" && (
+        <TransferPanel
+          state={state}
+          onWait={(batchId) => onChange(requestWait(state, batchId))}
+          onCancelWait={(batchId) => onChange(cancelWait(state, batchId))}
+          onDispatch={(mode) =>
+            onChange(dispatchShuttle(state, f.id, mode))
+          }
+        />
+      )}
       <button
         className="primary depart-button"
         data-testid="depart"
         disabled={!flightReady(state, f.id) || f.status !== "parked"}
+        title={blockReason ?? "地勤与转机均已闭环，可以推出"}
         onClick={() => onChange(departFlight(state, f.id))}
       >
         {f.status === "departed"
@@ -79,6 +110,11 @@ export function Inspector({
             : "批准推出离港"}{" "}
         <span>→</span>
       </button>
+      {f.status === "parked" && blockReason && (
+        <p className="depart-block" data-testid="depart-block">
+          ⚠ {blockReason}
+        </p>
+      )}
       <EventLog state={state} />
     </aside>
   );

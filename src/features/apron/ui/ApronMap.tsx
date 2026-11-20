@@ -266,6 +266,38 @@ export function ApronMap({ state, onStand, onFlight }: Props) {
             )}
           </g>
         ))}
+        {state.shuttles.map((v) => (
+          <g
+            key={v.id}
+            transform={`translate(${v.position.x} ${v.position.y})`}
+            className="vehicle-marker"
+            data-testid={`shuttle-${v.id}`}
+          >
+            <rect
+              x="-14"
+              y="-7"
+              width="28"
+              height="15"
+              rx="4"
+              fill="#8a6fb0"
+              stroke="#f3f0df"
+              strokeWidth="1.5"
+            />
+            <rect x="-9" y="-4" width="7" height="5" rx="1" fill="#e5e9df" />
+            <rect x="0" y="-4" width="7" height="5" rx="1" fill="#e5e9df" />
+            <circle cx="-8" cy="9" r="2.2" fill="#3a4644" />
+            <circle cx="8" cy="9" r="2.2" fill="#3a4644" />
+            {v.status === "travel" && (
+              <circle
+                r="20"
+                fill="none"
+                stroke="#c9a8ee"
+                strokeOpacity=".65"
+                className="moving-ring"
+              />
+            )}
+          </g>
+        ))}
         <g transform="translate(880 60)">
           <circle r="25" fill="#f3f1e8" fillOpacity=".8" />
           <path d="M0 -17L6 10L0 5L-6 10Z" fill="#334d50" />
